@@ -1,0 +1,37 @@
+Create a new repository called “Terraform_Exercises” in github and clone it to your local machine. You will keep track of your terraform exercises (code) in this repo
+
+Create 2 EC2s in the default VPC, inject userdata that installs apache while EC2s are provisioning.
+Create a key pair and attach it to your ec2s in order to ssh to your ec2s.
+
+
+Create 2 security groups, one for EC2s and one for ALB
+
+Create a target group and put EC2s behind it.
+
+=====
+resource "aws_lb_target_group" "alb-example" {
+  name        = "tf-example-lb-alb-tg"
+  port        = 80
+  protocol    = "TCP"
+}
+
+========
+
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = aws_lb_target_group.test.arn
+  target_id        = aws_instance.test.id
+  port             = 80
+}
+
+========
+
+Create ALB in the same default VPC
+
+
+Create ALB listeners for 80 and 443 ports. Attach your SSL to ALB. Make sure health check is going through
+
+Create Hosted Zone in AWS (should be done in AWS console). **NOTE: we did it during AWS hands-on. Please use that hosted zone. 
+
+Create Route 53 C-Name to forward the DNS Name of your load balancer to your domain name. 
+Test your apache by hitting the URL of your Hosted Zone record name (EX: andrew.chicagotentech.com).
+
